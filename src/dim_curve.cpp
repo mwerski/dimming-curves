@@ -143,4 +143,20 @@ void ledSCurve(uint16_t out[TABLE_SIZE], float g) {
   enforce_endpoints(out);
 }
 
+bool validate(const uint16_t out[TABLE_SIZE]) {
+  if (out == nullptr) return false;
+
+  if (out[0] != 0) return false;
+  if (out[TABLE_SIZE - 1] != PWM_MAX) return false;
+
+  uint16_t prev = out[0];
+  for (size_t i = 0; i < TABLE_SIZE; i++) {
+    const uint16_t v = out[i];
+    if (v > PWM_MAX) return false;
+    if (i > 0 && v < prev) return false;
+    prev = v;
+  }
+  return true;
+}
+
 } // namespace DimCurve

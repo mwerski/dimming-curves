@@ -57,4 +57,11 @@ void ledHybrid(uint16_t out[TABLE_SIZE], float t, float gammaLow, float gammaHig
 // smoothstep(x) = x^2 * (3 - 2x)
 void ledSCurve(uint16_t out[TABLE_SIZE], float gamma);
 
+// Validate a generated curve.
+// Returns true if:
+// - out[0]==0 and out[255]==PWM_MAX
+// - all entries are within 0..PWM_MAX
+// - curve is monotonic non-decreasing
+bool validate(const uint16_t out[TABLE_SIZE]);
+
 } // namespace DimCurve
